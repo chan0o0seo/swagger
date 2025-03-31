@@ -63,7 +63,6 @@ public class UserController {
         Ingredient ingredient = new Ingredient();
         return ResponseEntity.ok(ingredient);
     }
-
     @GetMapping("/inventoryexchange")
     @Operation(summary = "재고 교환 조회")
     public ResponseEntity<InventoryExchange> getInventoryExchange() {
