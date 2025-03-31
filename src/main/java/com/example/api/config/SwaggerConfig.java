@@ -22,6 +22,15 @@ public class SwaggerConfig {
                                 .email("support@wmthis.com")
                         ));
     }
+
+    @Bean
+    public GroupedOpenApi inventoryApi() {
+        return GroupedOpenApi.builder()
+                .group("커뮤니티 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/community/**") // 특정 URL 패턴을 포함
+                .build();
+    }
+
     @Bean
     public GroupedOpenApi inventoryApi() {
         return GroupedOpenApi.builder()

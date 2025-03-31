@@ -21,12 +21,7 @@ public class UserController {
         User user = new User();
         return ResponseEntity.ok(user);
     }
-    @GetMapping("/board")
-    @Operation(summary = "게시판 조회")
-    public ResponseEntity<Board> getBoard() {
-        Board board = new Board();
-        return ResponseEntity.ok(board);
-    }
+
     @GetMapping("/chatmessage")
     @Operation(summary = "채팅 메시지 조회")
     public ResponseEntity<ChatMessage> getChatMessage() {
@@ -51,12 +46,7 @@ public class UserController {
         Comment comment = new Comment();
         return ResponseEntity.ok(comment);
     }
-    @GetMapping("/communitysave")
-    @Operation(summary = "커뮤니티 찜 조회")
-    public ResponseEntity<CommunitySave> getCommunitySave() {
-        CommunitySave communitySave = new CommunitySave();
-        return ResponseEntity.ok(communitySave);
-    }
+
     @GetMapping("/aingredient")
     @Operation(summary = "재료 조회")
     public ResponseEntity<Ingredient> getIngredient() {
