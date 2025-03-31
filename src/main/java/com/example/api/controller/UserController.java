@@ -1,128 +1,72 @@
 package com.example.api.controller;
 
-import com.example.api.entity.*;
+import com.example.api.entity.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api")
-@Tag(name = "User", description = "사용자 API")
+@RequestMapping("/api/user")
+@Tag(name = "User API", description = "사용자 관련 API")
 public class UserController {
 
-
-    @GetMapping("/user")
-    @Operation(summary = "사용자 조회")
-    public ResponseEntity<User> getUser() {
-        User user = new User();
-        return ResponseEntity.ok(user);
+    @PostMapping
+    @Operation(summary = "회원가입", description = "새로운 사용자를 등록합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "회원가입 성공", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.UserResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    public ResponseEntity<UserDto.UserResponseDto> registerUser(@RequestBody UserDto.UserRequestDto requestDto) {
+        UserDto.UserResponseDto responseDto = new UserDto.UserResponseDto(1, requestDto.getName(), requestDto.getEmail(), requestDto.getBusinessNumber(), requestDto.getPhoneNumber());
+        return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/chatmessage")
-    @Operation(summary = "채팅 메시지 조회")
-    public ResponseEntity<ChatMessage> getChatMessage() {
-        ChatMessage chatMessage = new ChatMessage();
-        return ResponseEntity.ok(chatMessage);
-    }
-    @GetMapping("/chatparticipant")
-    @Operation(summary = "채팅 참여자 조회")
-    public ResponseEntity<ChatParticipant> getChatParticipant() {
-        ChatParticipant chatParticipant = new ChatParticipant();
-        return ResponseEntity.ok(chatParticipant);
-    }
-    @GetMapping("/chatroom")
-    @Operation(summary = "채팅방 조회")
-    public ResponseEntity<ChatRoom> getChatRoom() {
-        ChatRoom chatRoom = new ChatRoom();
-        return ResponseEntity.ok(chatRoom);
-    }
-    @GetMapping("/comment")
-    @Operation(summary = "댓글 조회")
-    public ResponseEntity<Comment> getComment() {
-        Comment comment = new Comment();
-        return ResponseEntity.ok(comment);
+    @PostMapping("/login")
+    @Operation(summary = "로그인", description = "이메일과 비밀번호로 로그인합니다. 성공시 JWT 토큰도 반환합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "로그인 성공", content = @Content(mediaType = "text/plain")),
+            @ApiResponse(responseCode = "401", description = "잘못된 이메일 또는 비밀번호")
+    })
+    public ResponseEntity<String> loginUser(@Parameter(description = "사용자 이메일", required = true) @RequestParam String email, @Parameter(description = "사용자 비밀번호", required = true) @RequestParam String password) {
+        return ResponseEntity.ok("로그인 성공: " + email);
     }
 
-    @GetMapping("/aingredient")
-    @Operation(summary = "재료 조회")
-    public ResponseEntity<Ingredient> getIngredient() {
-        Ingredient ingredient = new Ingredient();
-        return ResponseEntity.ok(ingredient);
+    @GetMapping("/{id}")
+    @Operation(summary = "사용자 조회", description = "ID로 사용자의 정보를 조회합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사용자 조회 성공", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.UserResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    public ResponseEntity<UserDto.UserResponseDto> getUser(@Parameter(description = "사용자 ID", required = true) @PathVariable Integer id) {
+        UserDto.UserResponseDto responseDto = new UserDto.UserResponseDto(id, "홍길동", "user@example.com", "123-45-67890", "010-1234-5678");
+        return ResponseEntity.ok(responseDto);
     }
-    @GetMapping("/inventoryexchange")
-    @Operation(summary = "재고 교환 조회")
-    public ResponseEntity<InventoryExchange> getInventoryExchange() {
-        InventoryExchange inventoryExchange = new InventoryExchange();
-        return ResponseEntity.ok(inventoryExchange);
+
+    @PutMapping("/{id}")
+    @Operation(summary = "사용자 정보 수정", description = "사용자의 정보를 수정합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "사용자 정보 수정 성공", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.UserResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음"),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청")
+    })
+    public ResponseEntity<UserDto.UserResponseDto> updateUser(@Parameter(description = "사용자 ID", required = true) @PathVariable Integer id, @RequestBody UserDto.UserRequestDto requestDto) {
+        UserDto.UserResponseDto responseDto = new UserDto.UserResponseDto(id, requestDto.getName(), requestDto.getEmail(), requestDto.getBusinessNumber(), requestDto.getPhoneNumber());
+        return ResponseEntity.ok(responseDto);
     }
-    @GetMapping("/menu")
-    @Operation(summary = "메뉴 조회")
-    public ResponseEntity<Menu> getMenu() {
-        Menu menu = new Menu();
-        return ResponseEntity.ok(menu);
-    }
-    @GetMapping("/menuorder")
-    @Operation(summary = "메뉴 주문 조회")
-    public ResponseEntity<MenuOrder> getMenuOrder() {
-        MenuOrder menuOrder = new MenuOrder();
-        return ResponseEntity.ok(menuOrder);
-    }
-    @GetMapping("/menuorderitem")
-    @Operation(summary = "메뉴 주문 아이템 조회")
-    public ResponseEntity<MenuOrderItem> getMenuOrderItem() {
-        MenuOrderItem menuOrderItem = new MenuOrderItem();
-        return ResponseEntity.ok(menuOrderItem);
-    }
-    @GetMapping("/menupayment")
-    @Operation(summary = "메뉴 결제 조회")
-    public ResponseEntity<MenuPayment> getMenuPayment() {
-        MenuPayment menuPayment = new MenuPayment();
-        return ResponseEntity.ok(menuPayment);
-    }
-    @GetMapping("/menutransaction")
-    @Operation(summary = "메뉴 거래 조회")
-    public ResponseEntity<MenuTransaction> getMenuTransaction() {
-        MenuTransaction menuTransaction = new MenuTransaction();
-        return ResponseEntity.ok(menuTransaction);
-    }
-    @GetMapping("/order")
-    @Operation(summary = "주문 조회")
-    public ResponseEntity<Order> getOrder() {
-        Order order = new Order();
-        return ResponseEntity.ok(order);
-    }
-    @GetMapping("/orderitem")
-    @Operation(summary = "주문 아이템 조회")
-    public ResponseEntity<OrderItem> getOrderItem() {
-        OrderItem orderItem = new OrderItem();
-        return ResponseEntity.ok(orderItem);
-    }
-    @GetMapping("/payment")
-    @Operation(summary = "결제 조회")
-    public ResponseEntity<Payment> getPayment() {
-        Payment payment = new Payment();
-        return ResponseEntity.ok(payment);
-    }
-    @GetMapping("/recipe")
-    @Operation(summary = "레시피 조회")
-    public ResponseEntity<Recipe> getRecipe() {
-        Recipe recipe = new Recipe();
-        return ResponseEntity.ok(recipe);
-    }
-    @GetMapping("/store")
-    @Operation(summary = "상점 조회")
-    public ResponseEntity<Store> getStore() {
-        Store store = new Store();
-        return ResponseEntity.ok(store);
-    }
-    @GetMapping("/transaction")
-    @Operation(summary = "거래 조회")
-    public ResponseEntity<Transaction> getTransaction() {
-        Transaction transaction = new Transaction();
-        return ResponseEntity.ok(transaction);
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "회원 탈퇴", description = "사용자를 삭제합니다.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공", content = @Content(mediaType = "text/plain")),
+            @ApiResponse(responseCode = "404", description = "사용자를 찾을 수 없음")
+    })
+    public ResponseEntity<String> deleteUser(@Parameter(description = "사용자 ID", required = true) @PathVariable Integer id) {
+        return ResponseEntity.ok("사용자 삭제 완료: " + id);
     }
 }

@@ -59,4 +59,18 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/menu-order/**") // 특정 URL 패턴을 포함
                 .build();
     }
+    @Bean
+    public GroupedOpenApi storeApi() {
+        return GroupedOpenApi.builder()
+                .group("상점 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/api/store/**") // 특정 URL 패턴을 포함
+                .build();
+    }
+    @Bean
+    public GroupedOpenApi userApi() {
+        return GroupedOpenApi.builder()
+                .group("회원 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/api/user/**") // 특정 URL 패턴을 포함
+                .build();
+    }
 }
