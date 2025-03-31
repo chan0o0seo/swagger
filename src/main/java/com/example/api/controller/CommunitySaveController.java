@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/community")
-public class CommunityController {
+public class CommunitySaveController {
 
     @GetMapping("/board/{storeIdx}")
     @Operation(summary = "게시판 리스트 조회")
