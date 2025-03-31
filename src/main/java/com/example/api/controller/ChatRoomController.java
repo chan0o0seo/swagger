@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/chatrooms")
 @RequiredArgsConstructor
-public class ChatRoomController {
+public class    ChatRoomController {
 
     @Operation(summary = "채팅방 생성", description = "새로운 채팅방을 생성합니다.")
     @ApiResponses(value = {

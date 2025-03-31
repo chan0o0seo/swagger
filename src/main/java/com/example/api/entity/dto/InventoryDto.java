@@ -97,4 +97,45 @@ public class InventoryDto {
         @Schema(description = "수량", example = "10")
         private Integer quantity;
     }
+
+    @Getter
+    @Schema(description = "게시글 재료 판매 요청 DTO")
+    public class BoardRequest {
+        @Schema(description = "재료 ID", example = "1")
+        private Integer id;
+
+        @Schema(description = "재료 이름", example = "양파")
+        private String name;
+
+        @Schema(description = "재료 수량", example = "10")
+        private Integer quantity;
+
+        @Schema(description = "재료 단위", example = "개")
+        private String unit;
+
+        @Schema(description = "가격", example = "개")
+        private Integer price;
+    }
+    
+    @Getter
+    @Schema(description = "게시글 재료 판매 응답 DTO")
+    public class BoardResponse {
+        @Schema(description = "재료 ID", example = "1")
+        private Integer id;
+
+        @Schema(description = "상점 ID", example = "123")
+        private Integer storeId;
+
+        @Schema(description = "재료 이름", example = "양파")
+        private String name;
+
+        @Schema(description = "재료 수량", example = "10")
+        private Integer quantity;
+
+        @Schema(description = "재료 단위", example = "개")
+        private String unit;
+
+        @Schema(description = "하나당 가격", example = "개")
+        private Integer price;
+    }
 }
