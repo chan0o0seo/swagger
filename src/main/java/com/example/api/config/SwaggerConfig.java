@@ -32,6 +32,14 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public GroupedOpenApi boardApi() {
+        return GroupedOpenApi.builder()
+                .group("게시글 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/api/board/**") // 특정 URL 패턴을 포함
+                .build();
+    }
+
+    @Bean
     public GroupedOpenApi inventoryApi() {
         return GroupedOpenApi.builder()
                 .group("재고 관리")  // Swagger UI에서 표시될 그룹 이름
