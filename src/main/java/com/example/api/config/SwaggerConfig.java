@@ -24,10 +24,10 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi inventoryApi() {
+    public GroupedOpenApi communityApi() {
         return GroupedOpenApi.builder()
                 .group("커뮤니티 관리")  // Swagger UI에서 표시될 그룹 이름
-                .pathsToMatch("/community/**") // 특정 URL 패턴을 포함
+                .pathsToMatch("/api/community/**") // 특정 URL 패턴을 포함
                 .build();
     }
 
