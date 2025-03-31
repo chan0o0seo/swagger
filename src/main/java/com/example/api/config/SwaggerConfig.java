@@ -33,7 +33,14 @@ public class SwaggerConfig {
     public GroupedOpenApi chatApi() {
         return GroupedOpenApi.builder()
                 .group("채팅 관리")  // Swagger UI에서 표시될 그룹 이름
-                .pathsToMatch("/api/chat/**") // 특정 URL 패턴을 포함
+                .pathsToMatch("/api/chatrooms/**") // 특정 URL 패턴을 포함
+                .build();
+    }
+    @Bean
+    public GroupedOpenApi orderApi() {
+        return GroupedOpenApi.builder()
+                .group("상점간 거래 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/api/order/**") // 특정 URL 패턴을 포함
                 .build();
     }
 }
