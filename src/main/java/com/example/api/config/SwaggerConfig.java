@@ -3,6 +3,7 @@ package com.example.api.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,4 +22,15 @@ public class SwaggerConfig {
                                 .email("support@wmthis.com")
                         ));
     }
+
+    @Bean
+    public GroupedOpenApi inventoryApi() {
+        return GroupedOpenApi.builder()
+                .group("커뮤니티 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/community/**") // 특정 URL 패턴을 포함
+                .build();
+    }
+
+
+
 }
