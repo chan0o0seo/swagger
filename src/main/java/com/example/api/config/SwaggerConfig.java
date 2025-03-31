@@ -52,4 +52,11 @@ public class SwaggerConfig {
                 .pathsToMatch("/api/order/**") // 특정 URL 패턴을 포함
                 .build();
     }
+    @Bean
+    public GroupedOpenApi menuOrderApi() {
+        return GroupedOpenApi.builder()
+                .group("실제 메뉴 거래 관리")  // Swagger UI에서 표시될 그룹 이름
+                .pathsToMatch("/api/menu-order/**") // 특정 URL 패턴을 포함
+                .build();
+    }
 }
